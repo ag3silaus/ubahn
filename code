@@ -1,0 +1,316 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.*;
+import java.util.List;
+import java.util.Arrays;
+
+class Main {
+  public static void main(String[] args) {
+    List<Station> listStation = makeStations();
+    createLinies(listStation);
+    String changeStation = "U Kottbuser Tor";
+    System.out.println("From ?");
+    Scanner from = new Scanner(System.in);
+    String pickUpStationName = from.nextLine();
+    
+    System.out.println("To ?");
+    Scanner to = new Scanner(System.in);
+    String arriveStationName = to.nextLine();
+
+    Station pickUpStation = findTheStation(pickUpStationName,listStation);
+    Station arriveStation = findTheArriveStation(arriveStationName,listStation);
+    Linie startLinie = pickUpStation.linies.get(0);
+    Linie endLinie = arriveStation.linies.get(0);
+    int minDistance = 500;
+    String linieName = "";
+    
+    if(startLinie.name.equals(endLinie.name)){
+       int pickUpStationIndex = startLinie.getIndexOfStation(pickUpStationName);
+       int arriveStationIndex = startLinie.getIndexOfStation(arriveStationName);
+       if (arriveStationIndex != -1){
+         int currentDistance = pickUpStationIndex - arriveStationIndex;
+         if(currentDistance<0){
+           currentDistance = currentDistance*-1;
+         }
+         if(minDistance>currentDistance){
+           minDistance = currentDistance;
+           linieName= startLinie.name;
+         }
+       }
+       double travelTime = minDistance * 1.5;
+       System.out.println("Minumum distance between " + pickUpStationName + " and " + arriveStationName + " is " + minDistance + " Take first this line " + linieName);
+       System.out.println("Your travel time approximetly: " + travelTime + " minute.");
+    }
+    else{
+      int pickUpStationIndex = startLinie.getIndexOfStation(pickUpStationName);
+      int arriveStationIndex = endLinie.getIndexOfStation(arriveStationName);
+      int changeStationIndex = startLinie.getIndexOfStation(changeStation);
+      int changeStationIndex2 = endLinie.getIndexOfStation(changeStation);
+      int a = pickUpStationIndex - changeStationIndex;
+      if(a<0){
+        a = a*-1;
+      }
+      int b = changeStationIndex2 - arriveStationIndex;
+      if(b<0){
+        b=b*-1;
+      }
+      int currentDistance = (a) + (b);
+      if(currentDistance<0){
+           currentDistance = currentDistance*-1;
+         }
+      if(minDistance>currentDistance){
+           minDistance = currentDistance;
+           linieName = endLinie.name;
+         }
+
+      double travelTime = minDistance * 1.5;   
+      System.out.println("Minumum distance between " + pickUpStationName + " and " + arriveStationName + " is " + minDistance + " Take first this line " + startLinie.name +" Get off at Kottbuser Tor and take " + linieName);
+      System.out.println("Your travel time approximetly: " + travelTime + " minute.");
+    }
+    
+    
+  }
+  public static Station findTheStation(String stationName,List<Station> listStation){
+    for(int i =0; i<listStation.size(); i++)
+     if(stationName.equals(listStation.get(i).name)){
+       return listStation.get(i);
+     }
+      return null;
+  }
+  public static Station findTheArriveStation(String stationName,List<Station> listStation){
+    for(int i =0; i<listStation.size(); i++)
+     if(stationName.equals(listStation.get(i).name)){
+       return listStation.get(i);
+     }
+      return null;
+  }
+
+ public static List<Station> makeStations(){
+      Station warschauerStraße = new Station();
+      warschauerStraße.name = "S+U Warschauer Straße";
+      Station schlesischesTor = new Station();
+      schlesischesTor.name = "U Schlesisches Tor";
+      Station gorlitzerBahnhof = new Station();
+      gorlitzerBahnhof.name = "U Görlitzer Bahnhof";
+      Station kottbuserTor = new Station();
+      kottbuserTor.name = "U Kottbuser Tor";
+      Station prinzenStraße = new Station();
+      prinzenStraße.name = "U Prinzenstraße";
+      Station halleschesTor = new Station();
+      halleschesTor.name = "U Hallesches Tor";
+      Station mockenbrucke = new Station();
+      mockenbrucke.name = "U Möckenbrücke";
+      Station gleisdreieck = new Station();
+      gleisdreieck.name = "U Gleisdreieck";
+      Station kurfürsternstraße = new Station();
+      kurfürsternstraße.name = "U Kurfürsternstraße";
+      Station nollendorfplatz = new Station();
+      nollendorfplatz.name = "U Nollendorfplatz";
+      Station wittenbergerplatz = new Station();
+      wittenbergerplatz.name = "U Wittenbergerplatz";
+      Station kurfürsterndamm = new Station();
+      kurfürsterndamm.name = "U Kurfürsterndamm";
+      Station uhlandstraße = new Station();
+      uhlandstraße.name = "U Uhlandstraße";
+      Station wittenau  = new Station();
+      wittenau.name = "S+U Wittenau";
+      Station  rathausReinickendorf = new Station();
+      rathausReinickendorf.name = "U Rathaus Reinickendorf";
+      Station lindauerAlle  = new Station();
+      lindauerAlle.name = "U Lindauer Alle";
+      Station paracelsusBad  = new Station();
+      paracelsusBad.name = "U Paracelsus-Bad";
+      Station  rezidenzStraße = new Station();
+      rezidenzStraße.name = "U Rezidenzstraße";
+      Station osloerStraße  = new Station();
+      osloerStraße.name = "U Osloer Straße";
+      Station pankStraße = new Station();
+      pankStraße.name = "U Pankstraße";
+      Station gesundbrunnen  = new Station();
+      gesundbrunnen.name = "S+U Gesundbrunnen";
+      Station voltaStraße  = new Station();
+      voltaStraße.name = "U Voltastraße";
+      Station bernauerStraße = new Station();
+      bernauerStraße.name = "U Bernauer Straße";
+      Station rosenthalerPlatz  = new Station();
+      rosenthalerPlatz.name = "U Rosenthalerplatz";
+      Station  weinmeisterStraße = new Station();
+      weinmeisterStraße.name = "U Weinmeisterstraße";
+      Station alexanderPlatz  = new Station();
+      alexanderPlatz.name ="S+U Alexanderplatz";
+      Station  jannowitz = new Station();
+      jannowitz.name ="S+U Jannowitzbrücke";
+      Station henrichHeine  = new Station();
+      henrichHeine.name ="U Henrich-Heine Straße";
+      Station moritzPlatz  = new Station();
+      moritzPlatz.name ="U Moritzplatz";
+      Station schonleinstraße  = new Station();
+      schonleinstraße.name ="U Schönleinstraße";
+      Station herrmannplatz  = new Station();
+      herrmannplatz.name ="U Herrmannplatz";
+      Station  boddinstraße = new Station();
+      boddinstraße.name ="U Boddinstr.";
+      Station leineStraße  = new Station();
+      leineStraße.name ="U Leinestraße";
+      Station herrmannstraße  = new Station();
+      herrmannstraße.name ="S+U Herrmannstraße";
+
+
+      List <Station> listStation = new ArrayList<Station>();
+      listStation.add(warschauerStraße);
+      listStation.add(schlesischesTor);
+      listStation.add(gorlitzerBahnhof);
+      listStation.add(kottbuserTor);
+      listStation.add(prinzenStraße);
+      listStation.add(halleschesTor);
+      listStation.add(mockenbrucke);
+      listStation.add(gleisdreieck);
+      listStation.add(kurfürsternstraße);
+      listStation.add(nollendorfplatz);
+      listStation.add(wittenbergerplatz);
+      listStation.add(kurfürsterndamm);
+      listStation.add(uhlandstraße);
+      listStation.add(wittenau);
+      listStation.add(rathausReinickendorf);
+      listStation.add(lindauerAlle);
+      listStation.add(paracelsusBad);
+      listStation.add(rezidenzStraße);
+      listStation.add(osloerStraße);
+      listStation.add(pankStraße);
+      listStation.add(gesundbrunnen);
+      listStation.add(voltaStraße);
+      listStation.add(bernauerStraße);
+      listStation.add(rosenthalerPlatz);
+      listStation.add(weinmeisterStraße);
+      listStation.add(alexanderPlatz);
+      listStation.add(jannowitz);
+      listStation.add(henrichHeine);
+      listStation.add(moritzPlatz);
+      listStation.add(schonleinstraße);
+      listStation.add(herrmannplatz);
+      listStation.add(boddinstraße);
+      listStation.add(leineStraße);
+      listStation.add(herrmannstraße);
+      return listStation;
+ }
+
+
+public static void createLinies(List<Station> listStation){
+
+      
+      Linie u1 = new Linie();
+      u1.name = "U 1";
+      u1.stationsName.add("S+U Warschauer Straße");
+      u1.stationsName.add("U Schlesisches Tor");
+      u1.stationsName.add("U Görlitzer Bahnhof");
+      u1.stationsName.add("U Kottbuser Tor");
+      u1.stationsName.add("U Prinzenstraße");
+      u1.stationsName.add("U Hallesches Tor");
+      u1.stationsName.add("U Möckenbrücke");
+      u1.stationsName.add("U Gleisdreieck");
+      u1.stationsName.add("U Kurfürsternstraße");
+      u1.stationsName.add("U Nollendorfplatz");
+      u1.stationsName.add("U Wittenbergerplatz");
+      u1.stationsName.add("U Kurfürsterndamm");
+      u1.stationsName.add("U Uhlandstraße");
+
+      Linie u8 = new Linie();
+      u8.name = "U 8";
+      u8.stationsName.add("S+U Wittenau");
+      u8.stationsName.add("U Rathaus Reinickendorf");
+      u8.stationsName.add("U Lindauer Alle");
+      u8.stationsName.add("U Paracelsus-Bad");
+      u8.stationsName.add("U Rezidenzstraße");
+      u8.stationsName.add("U Osloer Straße");
+      u8.stationsName.add("U Pankstraße");
+      u8.stationsName.add("S+U Gesundbrunnen");
+      u8.stationsName.add("U Voltastraße");
+      u8.stationsName.add("U Bernauer Straße");
+      u8.stationsName.add("U Rosenthalerplatz");
+      u8.stationsName.add("U Weinmeisterstraße");
+      u8.stationsName.add("S+U Alexanderplatz");
+      u8.stationsName.add("S+U Jannowitzbrücke");
+      u8.stationsName.add("U Henrich-Heine Straße");
+      u8.stationsName.add("U Moritzplatz");
+      u8.stationsName.add("U Kottbuser Tor");
+      u8.stationsName.add("U Schönleinstraße");
+      u8.stationsName.add("U Herrmannplatz");
+      u8.stationsName.add("U Boddinstr.");
+      u8.stationsName.add("U Leinestraße");
+      u8.stationsName.add("S+U Herrmannstraße");
+
+      List<Linie> u1Linies = new ArrayList<Linie>();
+      u1Linies.add(u1);
+      List<Linie> u8Linies = new ArrayList<Linie>();
+      u8Linies.add(u8);
+      List<Linie> u1u8Linies = new ArrayList<Linie>();
+      u1u8Linies.add(u1);
+      u1u8Linies.add(u8);
+      updateStation("S+U Warschauer Straße", u1Linies, listStation);
+      updateStation("U Schlesisches Tor", u1Linies, listStation);
+      updateStation("U Görlitzer Bahnhof", u1Linies, listStation);
+      updateStation("U Kottbuser Tor", u1Linies,listStation);
+      updateStation("U Prinzenstraße", u1Linies,listStation);
+      updateStation("U Hallesches Tor", u1Linies,listStation);
+      updateStation("U Möckenbrücke", u1Linies,listStation);
+      updateStation("U Gleisdreieck", u1Linies,listStation);
+      updateStation("U Kurfürsternstraße", u1Linies, listStation);
+      updateStation("U Nollendorfplatz", u1Linies, listStation);
+      updateStation("U Wittenbergplatz", u1Linies,listStation);
+      updateStation("U Kurfürsterndamm", u1Linies,listStation);
+      updateStation("U Uhlandstraße", u1Linies,listStation);
+      
+      updateStation("S+U Wittenau", u8Linies,listStation);
+      updateStation("U Rathaus Reinickendorf", u8Linies,listStation);
+      updateStation("U Lindauer Alle", u8Linies,listStation);
+      updateStation("U Paracelsus-Bad", u8Linies,listStation);
+      updateStation("U Rezidenzstraße", u8Linies,listStation);
+      updateStation("U Osloer Straße", u8Linies,listStation);
+      updateStation("U Pankstraße", u8Linies,listStation);
+      updateStation("S+U Gesundbrunnen", u8Linies,listStation);
+      updateStation("U Voltastraße", u8Linies,listStation);
+      updateStation("U Bernauer Straße", u8Linies,listStation);
+      updateStation("U Rosenthalerplatz", u8Linies,listStation);
+      updateStation("U Weinmeisterstraße", u8Linies,listStation);
+      updateStation("S+U Alexanderplatz", u8Linies,listStation);
+      updateStation("S+U Jannowitzbrücke", u8Linies,listStation);
+      updateStation("U Henrich-Heine Straße", u8Linies,listStation);
+      updateStation("U Moritzplatz", u8Linies,listStation);
+      updateStation("U Kottbuser Tor", u8Linies,listStation);
+      updateStation("U Schönleinstraße", u8Linies,listStation);
+      updateStation("U Herrmannplatz", u8Linies,listStation);
+      updateStation("U Boddinstr.", u8Linies,listStation);
+      updateStation("U Leinestraße", u8Linies,listStation);
+      updateStation("S+U Herrmannstraße", u8Linies,listStation);
+}
+public static void updateStation(String stationName, List<Linie> linies, List<Station> listStation){
+    for (int i = 0 ; i<listStation.size(); i++){
+      if(stationName.equals(listStation.get(i).name)){
+        Station updatedStation = new Station();
+        updatedStation.name = stationName;
+        updatedStation.linies = linies;
+        listStation.set(i, updatedStation);
+
+      }
+    }
+}
+
+}
+class Linie{
+
+ public String name;
+ public List<String> stationsName = new ArrayList<String>();
+ public int getIndexOfStation(String station){
+    for (int i =0 ; i<stationsName.size(); i++) {
+      if(station.equals(stationsName.get(i))){
+        return i;
+      }
+    }
+    return -1;
+  }
+
+}
+class Station {
+  public String name;
+  public List<Linie> linies = new ArrayList<Linie>();
+}
